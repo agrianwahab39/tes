@@ -307,6 +307,13 @@ def classify_manipulation_advanced(analysis_results):
         if noise_inconsistency >= 0.5: splicing_score += 30
         elif noise_inconsistency > 0.35: splicing_score += 20
         elif noise_inconsistency > 0.25: splicing_score += 10
+
+        # Berikan penalti/bonus tambahan jika indikasi copy-move sangat kuat
+        # Tujuannya agar kasus kombinasi (copy-move + splicing) lebih mudah terdeteksi
+        if copy_move_score > 80 and splicing_score >= 40:
+            splicing_score += 20
+        if copy_move_score > 90 and splicing_score >= 50:
+            splicing_score += 20
         
         # ... dan seterusnya Anda bisa menyeimbangkan ulang semua skor.
         # Untuk saat ini, mari fokus pada yang paling berpengaruh.
